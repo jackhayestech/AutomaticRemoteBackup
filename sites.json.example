@@ -1,0 +1,10 @@
+{
+    "sitename":{
+        "user" : "user",
+        "host" : "ip address2",
+        "password" : "password",
+        "back_name" : "name you want your back up to be(appended with date of backup)",
+        "back_dir" : "the directory you want backed up",
+        "local_dir" : "where the back is saved to locally"
+    }
+}
