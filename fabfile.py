@@ -76,9 +76,8 @@ def create_file_backup():
 def finished():
     # Errors have occured
     if len(errors) > 0:
-        print("Test: " + str(len(errors)))
         url = settings['confirm_backup_address']
-        payload = {'password': settings['confirm_backup_password'], 'result': errors}
+        payload = {'password': settings['confirm_backup_password'], 'email': settings['confirm_backup_email'],  'result': errors}
         r = requests.post(url, data=payload)
     # The backup ran without issue
     else:
