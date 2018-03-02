@@ -76,13 +76,19 @@ def create_file_backup():
 def finished():
     # Errors have occured
     if len(errors) > 0:
-        url = settings['confirm_backup_address']
-        payload = {'password': settings['confirm_backup_password'], 'email': settings['confirm_backup_email'],  'result': errors}
-        r = requests.post(url, data=payload)
+        results_string = "The following backups have completed with errors: \n"
+        for error in errors: 
+            results_string = results_string + error + "\n"
+        send_confirmation(results_string)
     # The backup ran without issue
     else:
-        print("Completed the backups")
+        send_confirmation("The back up concluded with no issues")
 
 #An error has been found
 def error_with_execution(backName):
     errors.append(backName + '\n')
+
+def send_confirmation(results_string)
+    url = settings['confirm_backup_address']
+    payload = {'password': settings['confirm_backup_password'], 'email': settings['confirm_backup_email'],  'result': results_string}
+    r = requests.post(url, data=payload)
