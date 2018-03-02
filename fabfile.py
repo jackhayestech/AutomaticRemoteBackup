@@ -1,16 +1,23 @@
+#pip install requests
+#pip install fabric
+
 from fabric.api import *
 import datetime
 import json
-from pprint import pprint
+import requests
 
-#Loads the sites settings required to create backups
+#Loads the remote servers information required to create backups
 sites = json.load(open('sites.json'))
+#Loads the settings for the user running the script
+settings = json.load(open('settings.json'))
 #List of all the hosts to connect to
 hosts = []
 #Dictonary of the passwords
 passwords = {}
 #Dictonary of the settings needed to create the backups
 site_settings = {}
+#A list of errors that have occured during the back up
+errors = []
 
 #Loops through all the sites in the sites.json file
 for site in sites:
@@ -40,11 +47,6 @@ env.hosts = hosts
 #Sets the fabric env passwords to our loaded passwords dictonary
 env.passwords = passwords
 
-#Command to be run
-def run_backups():
-    create_file_backup()
-    finished()
-
 #Connects to the remote server and downloads a backup
 def create_file_backup():
     try:
@@ -70,9 +72,18 @@ def create_file_backup():
         error_with_execution(name)
 
 #The full list of hosts has been run through
+@runs_once
 def finished():
-    print("Completed the backups")
+    # Errors have occured
+    if len(errors) > 0:
+        print("Test: " + str(len(errors)))
+        url = settings['confirm_backup_address']
+        payload = {'password': settings['confirm_backup_password'], 'result': errors}
+        r = requests.post(url, data=payload)
+    # The backup ran without issue
+    else:
+        print("Completed the backups")
 
 #An error has been found
 def error_with_execution(backName):
-    print("Error creating: " + backName + " backup")
+    errors.append(backName + '\n')

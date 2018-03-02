@@ -1,3 +1,4 @@
 *.DS_STORE
 sites.json
+settings.json
 *.pyc
