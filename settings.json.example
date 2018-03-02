@@ -1,3 +1,4 @@
 {
-    "email":"jckhayes1@gmail.com"
+    "confirm_backup_address":"https://jackhayes.tech/admin/confirm_backp.php",
+    "confirm_backup_password":"password for accessing the php file"
 }
