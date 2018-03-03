@@ -5,6 +5,7 @@ from fabric.api import *
 import datetime
 import json
 import requests
+import subprocess
 
 #Loads the remote servers information required to create backups
 sites = json.load(open('sites.json'))
@@ -67,28 +68,42 @@ def create_file_backup():
         get(curr_dir + '/' + name + '.tar.gz', local_dir)
         #Removes the backup from the remote server
         run('rm ' + name + '.tar.gz')
+        #Checks the remaining diskspace on the local directory
+        check_remaining_disk_space(local_dir)
     #An error has occured during the backup
     except SystemExit:
         error_with_execution(name)
 
-#The full list of hosts has been run through
+# The full list of hosts has been run through
 @runs_once
 def finished():
-    # Errors have occured
-    if len(errors) > 0:
-        results_string = "The following backups have completed with errors: \n"
-        for error in errors: 
-            results_string = results_string + error + "\n"
-        send_confirmation(results_string)
-    # The backup ran without issue
-    else:
-        send_confirmation("The back up concluded with no issues")
+    # If a confirmation email is to be sent
+    if settings['confirm_backup'] == "true":
+        # Errors have occured
+        if len(errors) > 0:
+            results_string = "The following backups have completed with errors: \n"
+            for error in errors: 
+                results_string = results_string + error + "\n"
+        # The backup ran without issue
+        else:
+            results_string = "The back up concluded with no issues"
+            send_confirmation(results_string)
 
 #An error has been found
 def error_with_execution(backName):
     errors.append(backName + '\n')
 
-def send_confirmation(results_string)
+# Signals the remote server to send the email
+def send_confirmation(results_string):
     url = settings['confirm_backup_address']
     payload = {'password': settings['confirm_backup_password'], 'email': settings['confirm_backup_email'],  'result': results_string}
     r = requests.post(url, data=payload)
+
+# Checks the local backup device for remaining space
+def check_remaining_disk_space(local_dir):
+    command = ['df','-Ph',local_dir,'|','tail','-1','|','awk','"{print $4}"']
+    free = subprocess.check_output(command)
+    command = ['df','-Ph',local_dir,'|','tail','-1','|','awk','"{print $2}"']
+    total = subprocess.check_output(command) 
+
+    print(free + "/" + total)
