@@ -1,6 +1,6 @@
 {
-    "confirm_backup":"true",
-    "confirm_backup_address":"https://jackhayes.tech/admin/confirm_backp.php",
+    "confirm_backup":"false",
+    "confirm_backup_address":"https://mysite.com/confirm_backp.php",
     "confirm_backup_password":"password for accessing the php file",
-    "confirm_backup_email" : "jckhayes1@gmail.com"
+    "confirm_backup_email" : "An email address to send the backup confirmation to"
 }

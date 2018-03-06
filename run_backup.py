@@ -1,13 +1,11 @@
 #pip install requests
 #pip install fabric
-
 from fabric.api import *
 from datetime import datetime
 import json
 import requests
 import subprocess
 import os
-import pprint
 
 # Loads the remote servers information required to create backups
 sites = json.load(open('sites.json'))

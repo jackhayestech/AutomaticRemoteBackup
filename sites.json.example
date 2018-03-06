@@ -1,11 +1,20 @@
 {
     "sitename":{
-        "user" : "user",
-        "host" : "ip address2",
-        "password" : "password",
-        "back_name" : "name you want your back up to be(appended with date of backup)",
-        "back_dir" : "the directory you want backed up",
-        "local_dir" : "where the back is saved to locally",
+        "host" : "The ip address of the remote server",
+        "user" : "The remote servers username",
+        "password" : "The password for the server",
+        "back_name" : "The name of your backup (dont use hyphens (the - symbol))",
+        "back_dir" : "the path and name of the directory you want backed up",
+        "local_dir" : "the path of where the backup is saved locally",
         "number_of_backups" : the number of previous backups stored
+    },
+    "examplesite":{
+        "host" : "192.0.0.1",
+        "user" : "admin",
+        "password" : "password",
+        "back_name" : "MySiteBackup)",
+        "back_dir" : "web/mysite.com/public_html",
+        "local_dir" : "/Users/User/Documents/Backups",
+        "number_of_backups" : 3
     }
 }
