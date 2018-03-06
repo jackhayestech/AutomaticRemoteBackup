@@ -2,8 +2,9 @@
 A tool to automatically create local backups of remote directories
 
 # Required dependiecs
-Requests, install with: pip install requests
-Fabric, install with: pip install fabric or pip install fabric3 if running python version 3
+1. Requests, install with: pip install requests
+
+2. Fabric, install with: pip install fabric or pip install fabric3 if running python version 3
 
 # Instructions
 1. Rename settings.json.example and sites.json.example removing the .example from the file name.
