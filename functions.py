@@ -1,6 +1,7 @@
 import subprocess
 import requests
 import os
+import json
 
 # Loads the settings for the user running the script
 settings = json.load(open('settings.json'))
