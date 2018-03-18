@@ -1,3 +1,7 @@
+import subprocess
+import requests
+import os
+
 # Gets a date from a backups file name
 def get_date(filename):
     split = filename.split('-')
