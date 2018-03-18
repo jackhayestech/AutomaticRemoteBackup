@@ -2,6 +2,9 @@ import subprocess
 import requests
 import os
 
+# Loads the settings for the user running the script
+settings = json.load(open('settings.json'))
+
 # Gets a date from a backups file name
 def get_date(filename):
     split = filename.split('-')
