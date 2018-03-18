@@ -6,6 +6,12 @@ import json
 # Loads the settings for the user running the script
 settings = json.load(open('settings.json'))
 
+def main():
+    url = settings['confirm_backup_address']
+    results_string = "The email confirmation has sucessfully been set up."
+    payload = {'password': settings['confirm_backup_password'], 'email': settings['confirm_backup_email'],  'result': results_string}
+    r = requests.post(url, data=payload)
+
 # Gets a date from a backups file name
 def get_date(filename):
     split = filename.split('-')
